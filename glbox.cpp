@@ -23,7 +23,7 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     // Initialize the texture buffer.
     m_buffer = new unsigned char[3*TEX_RES];
 
-    //Übungsblatt 1 Aufgabe 5 ----------
+    //Exercise sheet 1 task 5 ----------
 
     Matrix<double, 4> test;
     test(0,0)= 3;

@@ -78,11 +78,11 @@ public:
     // Matrix multiplication
     Matrix<T, SIZE> operator *(const Matrix<T, SIZE> &mat)
     {
-        //TODO Check if Multiplikation möglich
+        //TODO Check if multiplication possible?
         Matrix<T, SIZE> solution;
-        for(unsigned int j = 0; j < SIZE; j++)  //Spalten der Lösung sol
-            for(unsigned int i = 0; i < SIZE; i++) //Zeilen der Lösung sol
-                for(unsigned int c = 0; c < SIZE; c++) //Multiplikation und Summe bilden
+        for(unsigned int j = 0; j < SIZE; j++)  //column of the solution
+            for(unsigned int i = 0; i < SIZE; i++) //rows of the solution
+                for(unsigned int c = 0; c < SIZE; c++) //multiplication and Sum
                      solution(i,j) += (*this).m_data[i][c] * mat(c,j);
 
 
@@ -92,8 +92,8 @@ public:
     //Matrix to QString
     QString toQString(){
         QString matrix;
-          for(unsigned int i = 0; i < SIZE; i++){ //Zeilen der Matrix
-               for(unsigned int j = 0; j < SIZE; j++){ //Spalten der Matrix
+          for(unsigned int i = 0; i < SIZE; i++){ //rows
+              for(unsigned int j = 0; j < SIZE; j++){ //column
                 matrix += QString::number(this->m_data[i][j]) + " ";
                }
 
