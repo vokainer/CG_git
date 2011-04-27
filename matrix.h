@@ -39,6 +39,11 @@ public:
                 m_data[i][j] = data[i][j];
     }
 
+    //Get Size of Matrix
+    int getSize(){
+        return SIZE;
+    }
+
     // Access operator to modifiy an entry.
     // i: Row, j: Column
     T &operator ()(unsigned int i, unsigned int j)
@@ -76,14 +81,15 @@ public:
     }
 
     // Matrix multiplication
+    //Only possible for two matrices with dim A = dim B = SIZE
     Matrix<T, SIZE> operator *(const Matrix<T, SIZE> &mat)
     {
-        //TODO Check if multiplication possible?
+
         Matrix<T, SIZE> solution;
         for(unsigned int j = 0; j < SIZE; j++)  //column of the solution
             for(unsigned int i = 0; i < SIZE; i++) //rows of the solution
                 for(unsigned int c = 0; c < SIZE; c++) //multiplication and Sum
-                     solution(i,j) += (*this).m_data[i][c] * mat(c,j);
+                     solution(i,j) += this->m_data[i][c] * mat(c,j);
 
 
         return solution;
