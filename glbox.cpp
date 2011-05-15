@@ -126,9 +126,35 @@ void GLBox::setPoint(Point2D p, Color c)
     m_buffer[3*TO_LINEAR(x,y)+2] = (unsigned char)(255.0*c.b);
 }
 
+/*
+  Draw a line with bresenham Algo from p1 to p2 with color
+*/
 void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 {
+    int x,x2,y,delta_x,delta_y,d,delta_ne,delta_e;
 
+    x = p1.x;
+    x2 = p2.x;
+    delta_x = p2.x - p1.x;
+    y = p1.y;
+    delta_y = p2.y - p1.y;
+    delta_ne = 2*(delta_y - delta_x);
+    delta_e = 2*delta_y;
+    setPoint(Point2D(x, y),color);
+    while(x<x2){
+        if(d>=0){
+            //NE
+            d += delta_ne;
+            x++;
+            y++;
+        }
+        else {
+            //E
+            d += delta_e;
+            x++;
+        }
+        setPoint(Point2D(x,y),color);
+    }
 }
 
 void GLBox::bresenhamCircle(Point2D center, int radius, Color color)
@@ -185,6 +211,9 @@ void GLBox::paintGL()
     Point2D center(20,20);
     setPoint(center, blue);
 
+    Point2D p3(10,10);
+    setPoint(p3);
+    bresenhamLine(p1,p3);
     manageTexture();
 
     glClear( GL_COLOR_BUFFER_BIT);
