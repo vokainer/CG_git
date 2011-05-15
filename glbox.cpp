@@ -131,26 +131,43 @@ void GLBox::setPoint(Point2D p, Color c)
 */
 void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 {
-    int x,x2,y,delta_x,delta_y,d,delta_ne,delta_e;
+    int x,x2,y,y2,dx,dy,d,dne,de;
 
     x = p1.x;
-    x2 = p2.x;
-    delta_x = p2.x - p1.x;
     y = p1.y;
-    delta_y = p2.y - p1.y;
-    delta_ne = 2*(delta_y - delta_x);
-    delta_e = 2*delta_y;
+    x2 = p2.x;
+    y2 = p2.y;
+
+    dx = abs(x2) - abs(x);
+    dy = abs(y2) - abs(y);
+
+    if(dx<0)
+        dx = -dx;
+    if(dy<0)
+        dy = -dy;
+
+    if(dx>dy){
+        //x grows faster
+
+    } else
+    {
+        //y grows faster
+    }
+
+    dne = 2*(dy - dx);
+    de = 2*dy;
+
     setPoint(Point2D(x, y),color);
     while(x<x2){
         if(d>=0){
             //NE
-            d += delta_ne;
+            d += dne;
             x++;
             y++;
         }
         else {
             //E
-            d += delta_e;
+            d += de;
             x++;
         }
         setPoint(Point2D(x,y),color);
@@ -211,9 +228,48 @@ void GLBox::paintGL()
     Point2D center(20,20);
     setPoint(center, blue);
 
+    //1.Oktant
     Point2D p3(10,10);
     setPoint(p3);
     bresenhamLine(p1,p3);
+
+    //2.Oktant
+    Point2D p4(10,20);
+    setPoint(p4);
+    //bresenhamLine(p1,p4);
+
+    //3.Oktant
+    Point2D p5(-10,20);
+    setPoint(p5);
+   // bresenhamLine(p1,p5);
+
+    //4.Oktant
+    Point2D p6(-10,10);
+    setPoint(p6);
+   // bresenhamLine(p1,p6);
+
+    //5.Oktant
+    Point2D p7(-10,-8);
+    setPoint(p7);
+    //bresenhamLine(p1,p7);
+
+    //6.Oktant
+    Point2D p8(-10,-10);
+    setPoint(p8);
+    //bresenhamLine(p1,p8);
+
+    //7.Oktant
+    Point2D p9(10,-20);
+    setPoint(p9);
+    //bresenhamLine(p1,p9);
+
+    //8.Oktant
+    Point2D p10(10,-10);
+    setPoint(p10);
+    //bresenhamLine(p1,p10);
+
+
+
     manageTexture();
 
     glClear( GL_COLOR_BUFFER_BIT);
