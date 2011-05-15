@@ -16,45 +16,45 @@
 GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
 	: QGLWidget( parent,  shareWidget )
 {
-    scale = 1.0;
+    scale = 0.007;
     m_texID = 0;
-    m_winWidth = 600;
-    m_winHeight = 600;
+    m_winWidth = 700;
+    m_winHeight = 700;
     // Initialize the texture buffer.
     m_buffer = new unsigned char[3*TEX_RES];
 
     //Exercise sheet 1 task 5 ----------
 
-    Matrix<double, 4> test;
-    test(0,0)= 3;
-    test(0,1)= 5;
-    test(0,2)= 1;
-    test(0,3)= 7;
+//    Matrix<double, 4> test;
+//    test(0,0)= 3;
+//    test(0,1)= 5;
+//    test(0,2)= 1;
+//    test(0,3)= 7;
 
-    test(1,0)= 2;
-    test(1,1)= 4;
-    test(1,2)= 5;
-    test(1,3)= 4;
+//    test(1,0)= 2;
+//    test(1,1)= 4;
+//    test(1,2)= 5;
+//    test(1,3)= 4;
 
-    test(2,0)= 1;
-    test(2,1)= 2;
-    test(2,2)= 2;
-    test(2,3)= 3;
-
-
-    test(3,0)= 4;
-    test(3,1)= 8;
-    test(3,2)= 9;
-    test(3,3)= 1;
+//    test(2,0)= 1;
+//    test(2,1)= 2;
+//    test(2,2)= 2;
+//    test(2,3)= 3;
 
 
-   bool sing;
-   qDebug() << "Test Matrix:" << endl << test.toQString() << endl;
-   qDebug() << endl << "Inverse der Test Matrix:" << endl << test.inverse(sing).toQString();
+//    test(3,0)= 4;
+//    test(3,1)= 8;
+//    test(3,2)= 9;
+//    test(3,3)= 1;
 
-   Matrix<double, 4> ergebnis;
-   ergebnis = test * test.inverse(sing);
-   qDebug() << endl << endl << "Multiplikation: "<< endl << ergebnis.toQString();
+
+//   bool sing;
+//   qDebug() << "Test Matrix:" << endl << test.toQString() << endl;
+//   qDebug() << endl << "Inverse der Test Matrix:" << endl << test.inverse(sing).toQString();
+
+//   Matrix<double, 4> ergebnis;
+//   ergebnis = test * test.inverse(sing);
+//   qDebug() << endl << endl << "Multiplikation: "<< endl << ergebnis.toQString();
 
     //-----------------------------------
 
@@ -133,25 +133,32 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 {
     int x,x2,y,y2,dx,dy,d,dne,de;
 
-    x = p1.x;
-    y = p1.y;
-    x2 = p2.x;
-    y2 = p2.y;
 
-    dx = abs(x2) - abs(x);
-    dy = abs(y2) - abs(y);
+    dx = abs(abs(p2.x) - abs(p1.x));
+    dy = abs(abs(p2.y) - abs(p1.y));
 
-    if(dx<0)
-        dx = -dx;
-    if(dy<0)
-        dy = -dy;
+    if(dx>=dy){
+        //x changes faster(under 1.Oktant, 8.Oktant, 4.Oktant, 5.Oktant)
+        if(p1.x <= p2.x){
+            x = p1.x;
+            y = p1.y;
+            x2 = p2.x;
+            y2 = p2.y;
+        } else {
+            x = p2.x;
+            y = p2.y;
+            x2 = p1.x;
+            y2 = p1.y;
+        }
 
-    if(dx>dy){
-        //x grows faster
 
     } else
     {
-        //y grows faster
+        //y changes faster (2.Oktant, 3.Oktant, 6.Oktant, 7.Oktant)
+        x = p1.x;
+        y = p1.y;
+        x2 = p2.x;
+        y2 = p2.y;
     }
 
     dne = 2*(dy - dx);
@@ -221,12 +228,12 @@ void GLBox::paintGL()
     Color blue(0.0, 0.0, 1.0);
 
     Point2D p1(0, 0);
-    Point2D p2(-10, 10);
+   // Point2D p2(-10, 10);
     setPoint(p1, red);
-    setPoint(p2, red);
+    //setPoint(p2, red);
 
-    Point2D center(20,20);
-    setPoint(center, blue);
+    //Point2D center(20,20);
+    //setPoint(center, blue);
 
     //1.Oktant
     Point2D p3(10,10);
@@ -234,40 +241,40 @@ void GLBox::paintGL()
     bresenhamLine(p1,p3);
 
     //2.Oktant
-    Point2D p4(10,20);
-    setPoint(p4);
-    //bresenhamLine(p1,p4);
+//    Point2D p4(10,20);
+//    setPoint(p4);
+//    bresenhamLine(p1,p4);
 
-    //3.Oktant
-    Point2D p5(-10,20);
-    setPoint(p5);
-   // bresenhamLine(p1,p5);
+//    //3.Oktant
+//    Point2D p5(-10,20);
+//    setPoint(p5);
+//   // bresenhamLine(p1,p5);
 
-    //4.Oktant
-    Point2D p6(-10,10);
-    setPoint(p6);
-   // bresenhamLine(p1,p6);
+//    //4.Oktant
+//    Point2D p6(-10,10);
+//    setPoint(p6);
+//   // bresenhamLine(p1,p6);
 
     //5.Oktant
-    Point2D p7(-10,-8);
-    setPoint(p7);
-    //bresenhamLine(p1,p7);
+//    Point2D p7(-10,-10);
+//    setPoint(p7);
+//    bresenhamLine(p1,p7);
 
-    //6.Oktant
-    Point2D p8(-10,-10);
-    setPoint(p8);
-    //bresenhamLine(p1,p8);
+//    //6.Oktant
+//    Point2D p8(-10,-10);
+//    setPoint(p8);
+//    //bresenhamLine(p1,p8);
 
-    //7.Oktant
-    Point2D p9(10,-20);
-    setPoint(p9);
-    //bresenhamLine(p1,p9);
+//    //7.Oktant
+//    Point2D p9(10,-20);
+//    setPoint(p9);
+//    //bresenhamLine(p1,p9);
 
-    //8.Oktant
-    Point2D p10(10,-10);
-    setPoint(p10);
-    //bresenhamLine(p1,p10);
-
+//    //8.Oktant
+//    Point2D p10(10,-10);
+//    setPoint(p10);
+//    bresenhamLine(p1,p10);
+    setPoint(p1, red);
 
 
     manageTexture();
