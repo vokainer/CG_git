@@ -14,9 +14,9 @@
 #include <QDebug>
 
 GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
-	: QGLWidget( parent,  shareWidget )
+    : QGLWidget( parent,  shareWidget )
 {
-    scale = 0.007;
+    scale = 100;
     m_texID = 0;
     m_winWidth = 700;
     m_winHeight = 700;
@@ -25,36 +25,36 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
 
     //Exercise sheet 1 task 5 ----------
 
-//    Matrix<double, 4> test;
-//    test(0,0)= 3;
-//    test(0,1)= 5;
-//    test(0,2)= 1;
-//    test(0,3)= 7;
+    //    Matrix<double, 4> test;
+    //    test(0,0)= 3;
+    //    test(0,1)= 5;
+    //    test(0,2)= 1;
+    //    test(0,3)= 7;
 
-//    test(1,0)= 2;
-//    test(1,1)= 4;
-//    test(1,2)= 5;
-//    test(1,3)= 4;
+    //    test(1,0)= 2;
+    //    test(1,1)= 4;
+    //    test(1,2)= 5;
+    //    test(1,3)= 4;
 
-//    test(2,0)= 1;
-//    test(2,1)= 2;
-//    test(2,2)= 2;
-//    test(2,3)= 3;
-
-
-//    test(3,0)= 4;
-//    test(3,1)= 8;
-//    test(3,2)= 9;
-//    test(3,3)= 1;
+    //    test(2,0)= 1;
+    //    test(2,1)= 2;
+    //    test(2,2)= 2;
+    //    test(2,3)= 3;
 
 
-//   bool sing;
-//   qDebug() << "Test Matrix:" << endl << test.toQString() << endl;
-//   qDebug() << endl << "Inverse der Test Matrix:" << endl << test.inverse(sing).toQString();
+    //    test(3,0)= 4;
+    //    test(3,1)= 8;
+    //    test(3,2)= 9;
+    //    test(3,3)= 1;
 
-//   Matrix<double, 4> ergebnis;
-//   ergebnis = test * test.inverse(sing);
-//   qDebug() << endl << endl << "Multiplikation: "<< endl << ergebnis.toQString();
+
+    //   bool sing;
+    //   qDebug() << "Test Matrix:" << endl << test.toQString() << endl;
+    //   qDebug() << endl << "Inverse der Test Matrix:" << endl << test.inverse(sing).toQString();
+
+    //   Matrix<double, 4> ergebnis;
+    //   ergebnis = test * test.inverse(sing);
+    //   qDebug() << endl << endl << "Multiplikation: "<< endl << ergebnis.toQString();
 
     //-----------------------------------
 
@@ -131,54 +131,104 @@ void GLBox::setPoint(Point2D p, Color c)
 */
 void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 {
-    int x,x2,y,y2,dx,dy,d,dne,de;
+    int x,x1,x2,y,y1,y2,d;
 
-
-    dx = abs(abs(p2.x) - abs(p1.x));
-    dy = abs(abs(p2.y) - abs(p1.y));
-
-    if(dx>=dy){
-        //x changes faster(under 1.Oktant, 8.Oktant, 4.Oktant, 5.Oktant)
-        if(p1.x <= p2.x){
-            x = p1.x;
-            y = p1.y;
-            x2 = p2.x;
-            y2 = p2.y;
-        } else {
-            x = p2.x;
-            y = p2.y;
-            x2 = p1.x;
-            y2 = p1.y;
-        }
-
-
-    } else
-    {
-        //y changes faster (2.Oktant, 3.Oktant, 6.Oktant, 7.Oktant)
-        x = p1.x;
-        y = p1.y;
+    if(p1.x > p2.x){ //Swap points if p1 is on the right of p2
+        x2 = p1.x;
+        y2 = p1.y;
+        x1 = p2.x;
+        y1 = p1.y;
+    } else {
+        x1 = p1.x;
+        y1 = p1.y;
         x2 = p2.x;
-        y2 = p2.y;
+        y2 = p1.y;
     }
 
-    dne = 2*(dy - dx);
-    de = 2*dy;
+    int dy            = y2 - y1;  // y-increment from p1 to p2
+    int dx            = x2 - x1;  // x-increment from p1 to p2
+    int dy2           = (dy << 1);  // dy << 1 == 2*dy
+    int dx2           = (dx << 1);
+    int dy2_minus_dx2 = dy2 - dx2;  // precompute constant for speed up
+    int dy2_plus_dx2  = dy2 + dx2;
 
-    setPoint(Point2D(x, y),color);
-    while(x<x2){
-        if(d>=0){
-            //NE
-            d += dne;
-            x++;
-            y++;
+    if(dy >= 0) //m >= 0
+    {
+        if(dy <= dx){
+            //Case 1: 0<=m<=1   1.Oktant
+            d = dy2 -dx; //Initial d
+            x = x1;
+            y = y1;
+
+            while(x <= x2){
+                setPoint(Point2D(x,y),color);
+                if(d <= 0){
+                    d += y2;
+                } else {
+                    y++;
+                    d += dy2_minus_dx2;
+                }
+            }
         }
+        //Case 2: 1 < m < inf    2.Oktant
         else {
-            //E
-            d += de;
-            x++;
+            d = dx2 -dy; //Initial d
+
+            x = x1;
+            y = y1;
+
+            while(y <= y2){
+                setPoint(Point2D(x,y),color);
+                if(d <= 0){
+                    d += dx2;
+                } else {
+                    x++;
+                    d -= dy2_minus_dx2;
+                }
+                y++;
+            }
         }
-        setPoint(Point2D(x,y),color);
     }
+    else { //m<0
+        //Case 3: -1<=m<0
+        if(dx >= -dy){
+            d = -dy2 - dx; //Initial d
+
+            x = x1;
+            y = y1;
+
+            while(x <= x2){
+
+                setPoint(Point2D(x,y),color);
+                if(d <= 0){
+                    d -= dy2;
+                } else {
+                    y--;
+                    d -= dy2_plus_dx2;
+                }
+                x++;
+
+            }
+        }
+        //Case 4:  -inf < m < -1
+        else {
+            d = dx2 + dy; //Initial d
+
+            y = y1;
+            x = x1;
+            while(y >= y2){
+                setPoint(Point2D(x,y),color);
+                if(d <= 0){
+                    d += dx2;
+                } else {
+                    x++;
+                    d += dy2_plus_dx2;
+                }
+                y--;
+            }
+        }
+    }
+
 }
 
 void GLBox::bresenhamCircle(Point2D center, int radius, Color color)
@@ -228,7 +278,7 @@ void GLBox::paintGL()
     Color blue(0.0, 0.0, 1.0);
 
     Point2D p1(0, 0);
-   // Point2D p2(-10, 10);
+    // Point2D p2(-10, 10);
     setPoint(p1, red);
     //setPoint(p2, red);
 
@@ -236,45 +286,45 @@ void GLBox::paintGL()
     //setPoint(center, blue);
 
     //1.Oktant
-    Point2D p3(10,10);
-    setPoint(p3);
+    Point2D p3(10,1);
     bresenhamLine(p1,p3);
+    setPoint(p3,blue);
 
-    //2.Oktant
-//    Point2D p4(10,20);
-//    setPoint(p4);
-//    bresenhamLine(p1,p4);
+    //    //2.Oktant
+    //    Point2D p4(10,20);
+    //    bresenhamLine(p1,p4);
+    //    setPoint(p4,blue);
 
-//    //3.Oktant
-//    Point2D p5(-10,20);
-//    setPoint(p5);
-//   // bresenhamLine(p1,p5);
+    //    //3.Oktant
+    //    Point2D p5(-10,20);
+    //    setPoint(p5);
+    //   // bresenhamLine(p1,p5);
 
-//    //4.Oktant
-//    Point2D p6(-10,10);
-//    setPoint(p6);
-//   // bresenhamLine(p1,p6);
+    //    //4.Oktant
+    //    Point2D p6(-10,10);
+    //    setPoint(p6);
+    //   // bresenhamLine(p1,p6);
 
-    //5.Oktant
-//    Point2D p7(-10,-10);
-//    setPoint(p7);
-//    bresenhamLine(p1,p7);
+    //    //5.Oktant
+    //    Point2D p7(-10,-7);
+    //    setPoint(p7);
+    //    bresenhamLine(p1,p7);
 
-//    //6.Oktant
-//    Point2D p8(-10,-10);
-//    setPoint(p8);
-//    //bresenhamLine(p1,p8);
+    //    //6.Oktant
+    //    Point2D p8(-5,-10);
+    //    setPoint(p8);
+    //    bresenhamLine(p1,p8);
 
-//    //7.Oktant
-//    Point2D p9(10,-20);
-//    setPoint(p9);
-//    //bresenhamLine(p1,p9);
+    //    //7.Oktant
+    //    Point2D p9(10,-20);
+    //    setPoint(p9);
+    //    //bresenhamLine(p1,p9);
 
-//    //8.Oktant
-//    Point2D p10(10,-10);
-//    setPoint(p10);
-//    bresenhamLine(p1,p10);
-    setPoint(p1, red);
+    //    //8.Oktant
+    //    Point2D p10(10,-10);
+    //    setPoint(p10);
+    //    bresenhamLine(p1,p10);
+    //    setPoint(p1, red);
 
 
     manageTexture();
@@ -284,14 +334,14 @@ void GLBox::paintGL()
 
     glEnable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
-        glTexCoord2i(0, 0);
-        glVertex2i(-m_winWidth/2, -m_winHeight/2);
-        glTexCoord2i(1, 0);
-        glVertex2i( m_winWidth/2, -m_winHeight/2);
-        glTexCoord2i(1, 1);
-        glVertex2i( m_winWidth/2,  m_winHeight/2);
-        glTexCoord2i(0, 1);
-        glVertex2i(-m_winWidth/2, m_winHeight/2);
+    glTexCoord2i(0, 0);
+    glVertex2i(-m_winWidth/2, -m_winHeight/2);
+    glTexCoord2i(1, 0);
+    glVertex2i( m_winWidth/2, -m_winHeight/2);
+    glTexCoord2i(1, 1);
+    glVertex2i( m_winWidth/2,  m_winHeight/2);
+    glTexCoord2i(0, 1);
+    glVertex2i(-m_winWidth/2, m_winHeight/2);
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, 0);
