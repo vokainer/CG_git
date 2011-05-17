@@ -131,7 +131,7 @@ void GLBox::setPoint(Point2D p, Color c)
 */
 void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 {
-    int x,x1,x2,y,y1,y2,d;
+    int x,x1,x2,y,y1,y2,d,dx,dx2,dy,dy2,dy2_minus_dx2,dy2_plus_dx2;
 
     if(p1.x > p2.x){ //Swap points if p1 is on the right of p2
         x2 = p1.x;
@@ -145,19 +145,19 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
         y2 = p2.y;
     }
 
-    int dy            = y2 - y1;  // y-increment from p1 to p2
-    int dx            = x2 - x1;  // x-increment from p1 to p2
-    int dy2           = (dy << 1);  // dy << 1 == 2*dy
-    int dx2           = (dx << 1);
-    int dy2_minus_dx2 = dy2 - dx2;  // precompute constant for speed up
-    int dy2_plus_dx2  = dy2 + dx2;
+    dy = y2 - y1;  // y-increment from p1 to p2
+    dx = x2 - x1;  // x-increment from p1 to p2
+    dy2 = (dy << 1);  // dy << 1 == 2*dy
+    dx2 = (dx << 1);  // dx << 1 == 2*dx
+    dy2_minus_dx2 = dy2 - dx2;
+    dy2_plus_dx2 = dy2 + dx2;
 
     if(dy >= 0) //m >= 0
     {
         if(dy <= dx){
-            //Case 1: 0 <= m <= 1   1.Oktant
+            //Case 1:   0 <= m <= 1       1.Oktant (4.Oktant with swap)
 
-            d = dy2 -dx; //Initial d
+            d = dy2 - dx; //Initial d
 
             x = x1;
             y = y1;
@@ -174,7 +174,7 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
                 x++;
             }
         } else {
-            //Case 2: 1 < m < inf    2.Oktant
+            //Case 2:   1 < m < inf     2.Oktant (3.Oktant with swap)
 
             d = dx2 -dy; //Initial d
 
@@ -197,7 +197,7 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
     else { //m<0
 
         if(dx >= -dy){
-            //Case 3: -1<=m<0
+            //Case 3:   -1 <= m < 0     8.Oktant (5.Oktant with swap)
 
             d = -dy2 - dx; //Initial d
 
@@ -217,7 +217,7 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 
             }
         }
-        //Case 4:  -inf < m < -1
+        //Case 4:  -inf < m < -1    7.Oktant (6.Oktant with swap)
         else {
             d = dx2 + dy; //Initial d
 
