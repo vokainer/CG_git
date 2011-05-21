@@ -242,6 +242,38 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 
 void GLBox::bresenhamCircle(Point2D center, int radius, Color color)
 {
+    int x = 0;
+    int y = radius;
+    int d = 5 - 4*radius;
+
+    setPoint(Point2D(x + center.x,y + center.y),color);
+    setPoint(Point2D(x + center.x,-y + center.y),color);
+    setPoint(Point2D(y + center.x,-x + center.y), color);
+    setPoint(Point2D(-y + center.x,-x + center.y),color);
+    setPoint(Point2D(-x + center.x,-y + center.y),color);
+    setPoint(Point2D(-x + center.x,y + center.y),color);
+    setPoint(Point2D(-y + center.x,x + center.y),color);
+    setPoint(Point2D(y + center.x,x + center.y),color);
+
+    while(y > x){
+
+        if (d <= 0){
+            d += 4*(2*x + 3);
+        }
+        else {
+            d += 4*(2*(x - y) + 5);
+            y--;
+        }
+        x++;
+        setPoint(Point2D(x + center.x,y + center.y),color);
+        setPoint(Point2D(x + center.x,-y + center.y),color);
+        setPoint(Point2D(y + center.x,-x + center.y), color);
+        setPoint(Point2D(-y + center.x,-x + center.y),color);
+        setPoint(Point2D(-x + center.x,-y + center.y),color);
+        setPoint(Point2D(-x + center.x,y + center.y),color);
+        setPoint(Point2D(-y + center.x,x + center.y),color);
+        setPoint(Point2D(y + center.x,x + center.y),color);
+    }
 
 }
 
@@ -294,47 +326,62 @@ void GLBox::paintGL()
     //Point2D center(20,20);
     //setPoint(center, blue);
 
-    //1.Oktant
-    Point2D p3(10,5);
-    bresenhamLine(p1,p3);
-    setPoint(p3,blue);
+//    //1.Oktant
+//    Point2D p3(10,5);
+//    bresenhamLine(p1,p3);
+//    setPoint(p3,blue);
 
-    //2.Oktant
-    Point2D p4(4,10);
-    bresenhamLine(p1,p4);
-    setPoint(p4,blue);
+//    //2.Oktant
+//    Point2D p4(4,10);
+//    bresenhamLine(p1,p4);
+//    setPoint(p4,blue);
 
-    //3.Oktant
-    Point2D p5(-10,20);
-    bresenhamLine(p1,p5);
-    setPoint(p5,blue);
+//    //3.Oktant
+//    Point2D p5(-10,20);
+//    bresenhamLine(p1,p5);
+//    setPoint(p5,blue);
 
-    //4.Oktant
-    Point2D p6(-10,10);
-    bresenhamLine(p1,p6);
-    setPoint(p6,blue);
+//    //4.Oktant
+//    Point2D p6(-10,10);
+//    bresenhamLine(p1,p6);
+//    setPoint(p6,blue);
 
-    //5.Oktant
-    Point2D p7(-10,-7);
-    bresenhamLine(p1,p7);
-    setPoint(p7,blue);
+//    //5.Oktant
+//    Point2D p7(-10,-7);
+//    bresenhamLine(p1,p7);
+//    setPoint(p7,blue);
 
-    //6.Oktant
-    Point2D p8(-5,-10);
-    bresenhamLine(p1,p8);
-    setPoint(p8,blue);
+//    //6.Oktant
+//    Point2D p8(-5,-10);
+//    bresenhamLine(p1,p8);
+//    setPoint(p8,blue);
 
-    //7.Oktant
-    Point2D p9(10,-20);
-    bresenhamLine(p1,p9);
-    setPoint(p9,blue);
+//    //7.Oktant
+//    Point2D p9(10,-20);
+//    bresenhamLine(p1,p9);
+//    setPoint(p9,blue);
 
-    //8.Oktant
-    Point2D p10(10,-10);
-    bresenhamLine(p1,p10);
-    setPoint(p10,blue);
-    setPoint(p1, red);
+//    //8.Oktant
+//    Point2D p10(10,-10);
+//    bresenhamLine(p1,p10);
+//    setPoint(p10,blue);
+//    setPoint(p1, red);
 
+//      bresenhamCircle(Point2D(7,7),7,blue);
+
+    bresenhamLine(Point2D(-16,-6),Point2D(0,-6));
+    bresenhamLine(Point2D(-16,-6),Point2D(-8,4));
+    bresenhamLine(Point2D(0,-6),Point2D(-8,4));
+
+    bresenhamLine(Point2D(16,-6),Point2D(0,-6));
+    bresenhamLine(Point2D(16,-6),Point2D(8,4));
+    bresenhamLine(Point2D(0,-6),Point2D(8,4));
+
+    bresenhamLine(Point2D(-8,4),Point2D(8,4));
+    bresenhamLine(Point2D(-8,4),Point2D(0,14));
+    bresenhamLine(Point2D(8,4),Point2D(0,14));
+
+    bresenhamCircle(Point2D(0,0),20);
 
     manageTexture();
 
