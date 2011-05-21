@@ -171,7 +171,7 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
                     d += dy2;
                 } else {
                     y++;
-                    d += dy2_minus_dx2;
+                    d += dy2_minus_dx2; //dy2 <= dx2 -> dy2 - dx2 = 0 or negativ
                 }
                 x++;
             }
@@ -190,7 +190,7 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
                     d += dx2;
                 } else {
                     x++;
-                    d -= dy2_minus_dx2;
+                    d -= dy2_minus_dx2; //dy2 > dx2 -> dy2 - dx2 > 0
                 }
                 y++;
             }
@@ -212,8 +212,8 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
                 if(d <= 0){
                     d -= dy2;
                 } else {
-                    y--;
-                    d -= dy2_plus_dx2;
+                    y--; // -1 <= m < 0
+                    d -= dy2_plus_dx2; //dx2 >= -dy2 -> dy2 + dx2 > 0
                 }
                 x++;
 
@@ -231,9 +231,9 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
                     d += dx2;
                 } else {
                     x++;
-                    d += dy2_plus_dx2;
+                    d += dy2_plus_dx2; //dx2 < dy2 -> dy2 + dx2 <=0
                 }
-                y--;
+                y--; //-inf < m < -1
             }
         }
     }
