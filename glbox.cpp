@@ -147,8 +147,10 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 
     dy = y2 - y1;  //y increment p1 to p2
     dx = x2 - x1;  //x increment p1 to p2
-    dy2 = (dy << 1);  //dy << 1 == 2*dy
-    dx2 = (dx << 1);  //dx << 1 == 2*dx
+
+
+    dy2 = 2*dy; //Or dy2 = (dy << 1);  dy << 1 == 2*dy (1 bit to the left shift)
+    dx2 = 2*dx;
     dy2_minus_dx2 = dy2 - dx2;
     dy2_plus_dx2 = dy2 + dx2;
 
