@@ -370,16 +370,16 @@ void GLBox::paintGL()
 //      bresenhamCircle(Point2D(7,7),7,blue);
 
     bresenhamLine(Point2D(-16,-6),Point2D(0,-6));
-    bresenhamLine(Point2D(-16,-6),Point2D(-8,4));
-    bresenhamLine(Point2D(0,-6),Point2D(-8,4));
+    bresenhamLine(Point2D(-16,-6),Point2D(-8,2));
+    bresenhamLine(Point2D(0,-6),Point2D(-8,2));
 
     bresenhamLine(Point2D(16,-6),Point2D(0,-6));
-    bresenhamLine(Point2D(16,-6),Point2D(8,4));
-    bresenhamLine(Point2D(0,-6),Point2D(8,4));
+    bresenhamLine(Point2D(16,-6),Point2D(8,2));
+    bresenhamLine(Point2D(0,-6),Point2D(8,2));
 
-    bresenhamLine(Point2D(-8,4),Point2D(8,4));
-    bresenhamLine(Point2D(-8,4),Point2D(0,14));
-    bresenhamLine(Point2D(8,4),Point2D(0,14));
+    bresenhamLine(Point2D(-8,3),Point2D(8,3));
+    bresenhamLine(Point2D(-8,3),Point2D(0,11));
+    bresenhamLine(Point2D(8,3),Point2D(0,11));
 
     bresenhamCircle(Point2D(0,0),20);
 
