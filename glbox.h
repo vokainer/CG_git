@@ -49,6 +49,9 @@ public:
     // Draws a line from point p1 to point p2 with the given color using Bresenham's algorithm.
     void bresenhamLine(Point2D p1, Point2D p2, Color color = Color(0.0, 0.0, 0.0));
 
+    // Draws a line from Vec3d v1 to Vec3d v2 with the given color using Bresenham's algorithm.
+    void bresenhamLine(Vec3d v1, Vec3d v2, Color color = Color(0.0, 0.0, 0.0));
+
     // Draws a circle of the given radius around the center with the given color using Bresenham's algorithm.
     void bresenhamCircle(Point2D center, int radius, Color color = Color(0.0, 0.0, 0.0));
 

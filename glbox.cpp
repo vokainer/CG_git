@@ -240,6 +240,26 @@ void GLBox::bresenhamLine(Point2D p1, Point2D p2, Color color)
 
 }
 
+/*
+  Draw a line with bresenham Algo from v1 to v2 with color
+*/
+void GLBox::bresenhamLine(Vec3d v1, Vec3d v2, Color color)
+{
+    double d1[3];
+    double d2[3];
+    v1.getData(d1);
+    v2.getData(d2);
+
+    Point2D p1 (int(d1[0] + 0.5), int(d1[1] + 0.5));
+    Point2D p2 (int(d2[0] + 0.5), int(d2[1] + 0.5));
+
+    bresenhamLine(p1, p2, color);
+}
+
+
+
+
+
 void GLBox::bresenhamCircle(Point2D center, int radius, Color color)
 {
     int x = 0;
@@ -369,19 +389,26 @@ void GLBox::paintGL()
 
 //      bresenhamCircle(Point2D(7,7),7,blue);
 
-    bresenhamLine(Point2D(-16,-6),Point2D(0,-6));
-    bresenhamLine(Point2D(-16,-6),Point2D(-8,2));
-    bresenhamLine(Point2D(0,-6),Point2D(-8,2));
+//    bresenhamLine(Point2D(-16,-6),Point2D(0,-6));
+//    bresenhamLine(Point2D(-16,-6),Point2D(-8,2));
+//    bresenhamLine(Point2D(0,-6),Point2D(-8,2));
 
-    bresenhamLine(Point2D(16,-6),Point2D(0,-6));
-    bresenhamLine(Point2D(16,-6),Point2D(8,2));
-    bresenhamLine(Point2D(0,-6),Point2D(8,2));
+//    bresenhamLine(Point2D(16,-6),Point2D(0,-6));
+//    bresenhamLine(Point2D(16,-6),Point2D(8,2));
+//    bresenhamLine(Point2D(0,-6),Point2D(8,2));
 
-    bresenhamLine(Point2D(-8,3),Point2D(8,3));
-    bresenhamLine(Point2D(-8,3),Point2D(0,11));
-    bresenhamLine(Point2D(8,3),Point2D(0,11));
+//    bresenhamLine(Point2D(-8,3),Point2D(8,3));
+//    bresenhamLine(Point2D(-8,3),Point2D(0,11));
+//    bresenhamLine(Point2D(8,3),Point2D(0,11));
 
-    bresenhamCircle(Point2D(0,0),20);
+//    bresenhamCircle(Point2D(0,0),20);
+
+    double d1[3] = {1.54,4.123,1};
+    double d2[3] = {100.94,150.15,1};
+    Vec3d v1(d1);
+    Vec3d v2(d2);
+
+    bresenhamLine(v1, v2);
 
     manageTexture();
 
