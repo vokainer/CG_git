@@ -56,6 +56,9 @@ public:
     // Draws a circle of the given radius around the center with the given color using Bresenham's algorithm.
     void bresenhamCircle(Point2D center, int radius, Color color = Color(0.0, 0.0, 0.0));
 
+    // Draws a circle of the given radius around the center with the given color using Bresenham's algorithm.
+    void bresenhamCircle(Vec3d center, int radius, Color color = Color(0.0, 0.0, 0.0));
+
 public slots:
     // Perform all computations necessary to animate the scene. Invoked by the timer.
     void animate();

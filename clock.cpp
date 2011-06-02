@@ -11,7 +11,17 @@ void Clock::update(int elapsed)
 
 }
 
-Vec3d getPoints() //liefert die Punkte zurück die glbox dann in paintGL zeichnen soll
+Vec3d Clock::getPoints() //liefert die Punkte zurück die glbox dann in paintGL zeichnen soll
 {
 
+}
+
+Vec3d Clock::getCenter()
+{
+    return m_center;
+}
+
+int Clock::getRadius()
+{
+    return m_radius;
 }

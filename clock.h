@@ -16,6 +16,11 @@ public:
     //Get Points to draw
     Vec3d getPoints();
 
+    //unschöne Variante:
+    Vec3d getCenter();
+    int getRadius();
+
+
 private:
     Vec3d m_center; //Clock center Position in World Coordinates
     int m_radius; //Clock radius

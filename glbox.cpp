@@ -298,6 +298,15 @@ void GLBox::bresenhamCircle(Point2D center, int radius, Color color)
 
 }
 
+void GLBox::bresenhamCircle(Vec3d center, int radius, Color color)
+{
+    double d[3];
+    center.getData(d);
+
+    Point2D p1 (int(d[0] + 0.5), int(d[1] + 0.5));
+
+    bresenhamCircle(p1,radius,color);
+}
 
 void GLBox::initializeGL()
 {
@@ -410,6 +419,9 @@ void GLBox::paintGL()
     bresenhamLine(v1, v2);
 
     //Clock
+    bresenhamCircle(m_clock.getCenter(), m_clock.getRadius());
+
+
 
 
     manageTexture();
