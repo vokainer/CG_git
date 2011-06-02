@@ -20,6 +20,7 @@
 #include "Color.h"
 #include "Point2D.h"
 #include "matrix.h"
+#include "clock.h"
 
 // Texture resolution
 #define TEX_RES_X 400
@@ -108,11 +109,13 @@ private:
     int m_winHeight; // Window height
     GLuint m_texID; // Texture ID for OpenGL
 
-    /*
+
     unsigned int m_timeout; // Timeout of the animation timer in milliseconds
     int m_elapsed;  // Elapsed time during animation.
     QTimer *m_timer; // Timer object
-    */
+
+    Clock m_clock; //Clock object
+
 };
 
 #endif // _GLBOX_H_

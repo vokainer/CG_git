@@ -11,6 +11,7 @@
 #define MATRIX_H
 
 #include "vector.h"
+#include <QString>
 
 template<class T, unsigned int SIZE> class Vector;
 

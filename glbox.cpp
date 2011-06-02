@@ -58,8 +58,9 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
 
     //-----------------------------------
 
+    // Set new Clock
+    m_clock = Clock();
 
-    /*
     // Set the timeout to 50 milliseconds, corresponding to 20 FPS.
     m_timeout = 50; // 50 msecs
     m_timer = new QTimer(this);
@@ -68,7 +69,7 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     // Start the timer.
     m_timer->start(m_timeout);
     m_elapsed = 0;
-    */
+
 }
 
 GLBox::~GLBox()
@@ -403,12 +404,13 @@ void GLBox::paintGL()
 
 //    bresenhamCircle(Point2D(0,0),20);
 
-    double d1[3] = {1.54,4.123,1};
-    double d2[3] = {100.94,150.15,1};
-    Vec3d v1(d1);
-    Vec3d v2(d2);
+    Vec3d v1(1.54,4.123,1);
+    Vec3d v2(100.94,150.15,1);
 
     bresenhamLine(v1, v2);
+
+    //Clock
+
 
     manageTexture();
 
@@ -436,12 +438,12 @@ void GLBox::paintGL()
 
 void GLBox::animate()
 {
-    /*
+
     // At each timeout, increase the elapsed time until it reaches 100. Then it is set to zero and the hands of the clock are moved.
     m_elapsed = (m_elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100;
     m_clock.update(m_elapsed);
     updateGL();
-    */
+
 }
 
 void GLBox::mousePressEvent( QMouseEvent *e )
