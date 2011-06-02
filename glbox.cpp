@@ -20,6 +20,9 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     m_texID = 0;
     m_winWidth = 700;
     m_winHeight = 700;
+    m_Ygravity = 2;
+    m_Xgravity = 1;
+
     // Initialize the texture buffer.
     m_buffer = new unsigned char[3*TEX_RES];
 
@@ -127,6 +130,23 @@ void GLBox::setPoint(Point2D p, Color c)
     m_buffer[3*TO_LINEAR(x,y)+2] = (unsigned char)(255.0*c.b);
 }
 
+bool GLBox::CheckInBoundX(int point){
+    int x = point + TEX_HALF_X;
+    if (x < 0 || x >= TEX_RES_X)
+    {
+        return false;
+    } else
+        return true;
+}
+
+bool GLBox::CheckInBoundY(int point){
+    int y = point + TEX_HALF_Y;
+    if (y < 0 || y >= TEX_RES_Y)
+    {
+        return false;
+    } else
+        return true;
+}
 
 
 /*
@@ -352,7 +372,7 @@ void GLBox::paintGL()
 
     Point2D p1(0, 0);
     // Point2D p2(-10, 10);
-    setPoint(p1, red);
+    //setPoint(p1, red);
     //setPoint(p2, red);
 
     //Point2D center(20,20);
@@ -460,12 +480,34 @@ void GLBox::paintGL()
 
 void GLBox::animate()
 {
+    // Gravity
+    m_clock.SpeedY = m_clock.SpeedY - m_Ygravity;
+    m_clock.SpeedX = m_clock.SpeedX - m_Xgravity;
+
+    // Get Clocks (min x, min y), (max x, max y) of Axis aligned bounding box (AABB)
+    Point2D min(m_clock.getCenter().getX() - m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() - m_clock.getRadius() + m_clock.SpeedY);
+    Point2D max(m_clock.getCenter().getX() + m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() + m_clock.getRadius() + m_clock.SpeedY);
+
+    if(!CheckInBoundX(min.x))
+        m_clock.SpeedX = m_clock.SpeedX * -1;
+
+    if(!CheckInBoundX(max.x))
+        m_clock.SpeedX = m_clock.SpeedX * -1;
+
+    if(!CheckInBoundY(min.y))
+        m_clock.SpeedY = m_clock.SpeedY * -1;
+
+    if(!CheckInBoundY(max.y))
+        m_clock.SpeedY = m_clock.SpeedY * -1;
+
+
+    m_clock.setCenter(Vec3d(m_clock.getCenter().getX(), m_clock.getCenter().getY() + m_clock.SpeedY, 1));
+    m_clock.setCenter(Vec3d(m_clock.getCenter().getX()  + m_clock.SpeedX, m_clock.getCenter().getY(), 1));
 
     // At each timeout, increase the elapsed time until it reaches 100. Then it is set to zero and the hands of the clock are moved.
     m_elapsed = (m_elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100;
     m_clock.update(m_elapsed);
     updateGL();
-
 }
 
 void GLBox::mousePressEvent( QMouseEvent *e )

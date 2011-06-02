@@ -22,6 +22,12 @@ public:
     Vec3d getMinutes();
     Vec3d getSeconds();
 
+    // Setter Methods
+    void setCenter(Vec3d center);
+
+    int SpeedX; // Speed in X Axis
+    int SpeedY; // Speed in Y Axis
+
 
 private:
     int m_time; //Time since the clock was started

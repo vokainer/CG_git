@@ -59,6 +59,13 @@ public:
     // Draws a circle of the given radius around the center with the given color using Bresenham's algorithm.
     void bresenhamCircle(Vec3d center, int radius, Color color = Color(0.0, 0.0, 0.0));
 
+    // Check if X Value is in Window
+    bool CheckInBoundX(int point);
+
+    // Check if Y Value is in Window
+    bool CheckInBoundY(int point);
+
+
 
 public slots:
     // Perform all computations necessary to animate the scene. Invoked by the timer.
@@ -119,6 +126,9 @@ private:
     QTimer *m_timer; // Timer object
 
     Clock m_clock; //Clock object
+
+    int m_Ygravity; // Oh gravity, thou art a heartless bitch
+    int m_Xgravity; // Oh gravity, thou art a heartless bitch
 
 };
 

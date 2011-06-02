@@ -19,6 +19,8 @@ Clock::Clock(Vec3d center, int radius)
     m_militime = 0;
     m_SCount = 0;
     m_MCount = 0;
+    SpeedX = 0;
+    SpeedY = 0;
 
     //Get current time
     time_t timestamp;
@@ -95,4 +97,8 @@ Vec3d Clock::getMinutes()
 Vec3d Clock::getSeconds()
 {
     return m_seconds;
+}
+
+void Clock::setCenter(Vec3d center){
+    m_center = center;
 }
