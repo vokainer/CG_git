@@ -22,8 +22,8 @@
 #include "matrix.h"
 
 // Texture resolution
-#define TEX_RES_X 60
-#define TEX_RES_Y 60
+#define TEX_RES_X 400
+#define TEX_RES_Y 400
 
 // Number of pixels in the texture
 #define TEX_RES TEX_RES_X*TEX_RES_Y
