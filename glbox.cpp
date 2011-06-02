@@ -431,10 +431,6 @@ void GLBox::paintGL()
 
     //draw Seconds Pointer
     bresenhamLine(m_clock.getCenter(), Mat3d::getTranslationmatix(m_clock.getCenter()) *  m_clock.getSeconds(), Color(0,1,0));
-    //translation?
-
-
-
 
 
     //-------------
