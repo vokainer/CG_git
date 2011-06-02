@@ -213,6 +213,39 @@ public:
         return result;
     }
 
+    // Get Rotationmatrix for degree
+    static Matrix<double, 3> getRotationmatrix(double degree)
+    {
+        Matrix<double, 3> rotate;
+        rotate(0,0) = cos(degree);
+        rotate(1,0) = sin(degree);
+        rotate(2,0) = 0;
+
+        rotate(0,1) = -sin(degree);
+        rotate(1,1) = cos(degree);
+        rotate(2,1) = 0;
+
+        rotate(0,2) = 0;
+        rotate(1,2) = 0;
+        rotate(2,2) = 1;
+
+        return rotate;
+    }
+
+    // Get Translationmatrix for Translationvector
+    static Matrix<double, 3>  getTranslationmatix(Vec3d vector)
+    {
+        Matrix<double, 3> translate;
+        translate(0,0) = 1;
+        translate(1,1) = 1;
+        translate(2,2) = 1;
+
+        translate(0,3) = vector.getX();
+        translate(1,3) = vector.getY();
+
+        return translate;
+    }
+
 private:
     T m_data[SIZE][SIZE];
 };

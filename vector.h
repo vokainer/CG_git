@@ -87,6 +87,24 @@ public:
             data[i] = m_data[i];
     }
 
+    T getX()
+    {
+        if (SIZE > 0)
+            return m_data[0];
+    }
+
+    T getY()
+    {
+        if (SIZE > 1)
+            return m_data[1];
+    }
+
+    T getZ()
+    {
+        if (SIZE > 2)
+            return m_data[2];
+    }
+
     unsigned int getDimension()
     {
         return SIZE;

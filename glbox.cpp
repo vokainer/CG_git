@@ -59,7 +59,7 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     //-----------------------------------
 
     // Set new Clock
-    m_clock = Clock();
+    m_clock = Clock(Vec3d(-1.0,1.0,1.0),100);
 
     // Set the timeout to 50 milliseconds, corresponding to 20 FPS.
     m_timeout = 50; // 50 msecs
@@ -126,6 +126,8 @@ void GLBox::setPoint(Point2D p, Color c)
     m_buffer[3*TO_LINEAR(x,y)+1] = (unsigned char)(255.0*c.g);
     m_buffer[3*TO_LINEAR(x,y)+2] = (unsigned char)(255.0*c.b);
 }
+
+
 
 /*
   Draw a line with bresenham Algo from p1 to p2 with color
@@ -413,17 +415,29 @@ void GLBox::paintGL()
 
 //    bresenhamCircle(Point2D(0,0),20);
 
-    Vec3d v1(1.54,4.123,1);
-    Vec3d v2(100.94,150.15,1);
+//    Vec3d v1(1.54,4.123,1);
+//    Vec3d v2(100.94,150.15,1);
 
-    bresenhamLine(v1, v2);
+//    bresenhamLine(v1, v2);
 
-    //Clock
+    //----- Clock
     bresenhamCircle(m_clock.getCenter(), m_clock.getRadius());
 
+    //draw Hour Pointer
+    bresenhamLine(m_clock.getCenter(), Mat3d::getTranslationmatix(m_clock.getCenter()) * m_clock.getHours(), Color(1,0,0));
+
+    //draw Minute Pointer
+    bresenhamLine(m_clock.getCenter(), Mat3d::getTranslationmatix(m_clock.getCenter()) *  m_clock.getMinutes(), Color(0,0,1));
+
+    //draw Seconds Pointer
+    bresenhamLine(m_clock.getCenter(), Mat3d::getTranslationmatix(m_clock.getCenter()) *  m_clock.getSeconds(), Color(0,1,0));
+    //translation?
 
 
 
+
+
+    //-------------
     manageTexture();
 
     glClear( GL_COLOR_BUFFER_BIT);

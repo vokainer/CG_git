@@ -1,4 +1,1 @@
-getPoints() von Clock soll einen Vector von read only referencen zurück geben auf die Punkte die gezeichnet werden sollen
-nur was ist mit dem Kreis?
-
-Texture zu Weltkoordinaten?
+Center der Uhr gibt Position von 0,0 des Uhr Systems im Welt System an
