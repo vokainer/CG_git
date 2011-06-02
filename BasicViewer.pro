@@ -39,3 +39,6 @@ TEMPLATE = app
 
 #The following line was inserted by qt3to4
 QT +=  opengl 
+
+OTHER_FILES += \
+    README
