@@ -127,8 +127,8 @@ private:
 
     Clock m_clock; //Clock object
 
-    int m_Ygravity; // Oh gravity, thou art a heartless bitch
-    int m_Xgravity; // Oh gravity, thou art a heartless bitch
+    float m_Ygravity; // Oh gravity, thou art a heartless bitch
+    float m_Xgravity; // Oh gravity, thou art a heartless bitch
 
 };
 

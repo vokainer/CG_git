@@ -20,8 +20,8 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     m_texID = 0;
     m_winWidth = 700;
     m_winHeight = 700;
-    m_Ygravity = 2;
-    m_Xgravity = 1;
+    m_Ygravity = 2.0;
+    m_Xgravity = 0.5;
 
     // Initialize the texture buffer.
     m_buffer = new unsigned char[3*TEX_RES];
@@ -500,7 +500,14 @@ void GLBox::animate()
     if(!CheckInBoundY(max.y))
         m_clock.SpeedY = m_clock.SpeedY * -1;
 
+    // Prevent Clock from gaining to much Speed
+    if(m_clock.SpeedX > 20)
+        m_clock.SpeedX *= 0.5;
 
+    if(m_clock.SpeedY > 20)
+        m_clock.SpeedY *= 0.5;
+
+    // Set new Clock Position based on her Speed
     m_clock.setCenter(Vec3d(m_clock.getCenter().getX(), m_clock.getCenter().getY() + m_clock.SpeedY, 1));
     m_clock.setCenter(Vec3d(m_clock.getCenter().getX()  + m_clock.SpeedX, m_clock.getCenter().getY(), 1));
 

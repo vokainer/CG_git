@@ -41,4 +41,5 @@ TEMPLATE = app
 QT +=  opengl 
 
 OTHER_FILES += \
-    README
+    README \
+    TODO.txt
