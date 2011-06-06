@@ -20,8 +20,8 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     m_texID = 0;
     m_winWidth = 700;
     m_winHeight = 700;
-    m_Ygravity = 2.0;
-    m_Xgravity = 0.5;
+    m_Ygravity = 1.0;
+    m_Xgravity = 0.2;
 
     // Initialize the texture buffer.
     m_buffer = new unsigned char[3*TEX_RES];
@@ -489,16 +489,16 @@ void GLBox::animate()
     Point2D max(m_clock.getCenter().getX() + m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() + m_clock.getRadius() + m_clock.SpeedY);
 
     if(!CheckInBoundX(min.x))
-        m_clock.SpeedX = m_clock.SpeedX * -1;
+        m_clock.SpeedX *= -1;
 
     if(!CheckInBoundX(max.x))
-        m_clock.SpeedX = m_clock.SpeedX * -1;
+        m_clock.SpeedX *= -1;
 
     if(!CheckInBoundY(min.y))
-        m_clock.SpeedY = m_clock.SpeedY * -1;
+        m_clock.SpeedY *= -1;
 
     if(!CheckInBoundY(max.y))
-        m_clock.SpeedY = m_clock.SpeedY * -1;
+        m_clock.SpeedY *= -1;
 
     // Prevent Clock from gaining to much Speed
     if(m_clock.SpeedX > 20)

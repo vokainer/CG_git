@@ -25,8 +25,8 @@ public:
     // Setter Methods
     void setCenter(Vec3d center);
 
-    int SpeedX; // Speed in X Axis
-    int SpeedY; // Speed in Y Axis
+    float SpeedX; // Speed in X Axis
+    float SpeedY; // Speed in Y Axis
 
 
 private:

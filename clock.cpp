@@ -19,8 +19,8 @@ Clock::Clock(Vec3d center, int radius)
     m_militime = 0;
     m_SCount = 0;
     m_MCount = 0;
-    SpeedX = 0;
-    SpeedY = 0;
+    SpeedX = 0.0;
+    SpeedY = 0.0;
 
     //Get current time
     time_t timestamp;
