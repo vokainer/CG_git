@@ -71,6 +71,9 @@ public slots:
     // Perform all computations necessary to animate the scene. Invoked by the timer.
     void animate();
 
+    // Focus changed
+    void focusChanged(int focus);
+
 protected:
     // Initialize the OpenGL setting.
     void initializeGL();
@@ -129,6 +132,8 @@ private:
 
     float m_Ygravity; // Oh gravity, thou art a heartless bitch
     float m_Xgravity; // Oh gravity, thou art a heartless bitch
+
+    double m_focus;
 
 };
 

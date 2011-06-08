@@ -22,44 +22,10 @@ GLBox::GLBox( QWidget* parent, const QGLWidget* shareWidget )
     m_winHeight = 700;
     m_Ygravity = 1.0;
     m_Xgravity = 0.2;
+    double m_focus = 0; //Brennweite, distance Viewer to Bildfläche
 
     // Initialize the texture buffer.
     m_buffer = new unsigned char[3*TEX_RES];
-
-    //Exercise sheet 1 task 5 ----------
-
-    //    Matrix<double, 4> test;
-    //    test(0,0)= 3;
-    //    test(0,1)= 5;
-    //    test(0,2)= 1;
-    //    test(0,3)= 7;
-
-    //    test(1,0)= 2;
-    //    test(1,1)= 4;
-    //    test(1,2)= 5;
-    //    test(1,3)= 4;
-
-    //    test(2,0)= 1;
-    //    test(2,1)= 2;
-    //    test(2,2)= 2;
-    //    test(2,3)= 3;
-
-
-    //    test(3,0)= 4;
-    //    test(3,1)= 8;
-    //    test(3,2)= 9;
-    //    test(3,3)= 1;
-
-
-    //   bool sing;
-    //   qDebug() << "Test Matrix:" << endl << test.toQString() << endl;
-    //   qDebug() << endl << "Inverse der Test Matrix:" << endl << test.inverse(sing).toQString();
-
-    //   Matrix<double, 4> ergebnis;
-    //   ergebnis = test * test.inverse(sing);
-    //   qDebug() << endl << endl << "Multiplikation: "<< endl << ergebnis.toQString();
-
-    //-----------------------------------
 
     // Set new Clock
     m_clock = Clock(Vec3d(-1.0,1.0,1.0),100);
@@ -367,79 +333,6 @@ void GLBox::paintGL()
 
     clearImage(Color(1.0, 1.0, 1.0));
 
-    Color red(1.0, 0.0, 0.0);
-    Color blue(0.0, 0.0, 1.0);
-
-    Point2D p1(0, 0);
-    // Point2D p2(-10, 10);
-    //setPoint(p1, red);
-    //setPoint(p2, red);
-
-    //Point2D center(20,20);
-    //setPoint(center, blue);
-
-//    //1.Oktant
-//    Point2D p3(10,5);
-//    bresenhamLine(p1,p3);
-//    setPoint(p3,blue);
-
-//    //2.Oktant
-//    Point2D p4(4,10);
-//    bresenhamLine(p1,p4);
-//    setPoint(p4,blue);
-
-//    //3.Oktant
-//    Point2D p5(-10,20);
-//    bresenhamLine(p1,p5);
-//    setPoint(p5,blue);
-
-//    //4.Oktant
-//    Point2D p6(-10,10);
-//    bresenhamLine(p1,p6);
-//    setPoint(p6,blue);
-
-//    //5.Oktant
-//    Point2D p7(-10,-7);
-//    bresenhamLine(p1,p7);
-//    setPoint(p7,blue);
-
-//    //6.Oktant
-//    Point2D p8(-5,-10);
-//    bresenhamLine(p1,p8);
-//    setPoint(p8,blue);
-
-//    //7.Oktant
-//    Point2D p9(10,-20);
-//    bresenhamLine(p1,p9);
-//    setPoint(p9,blue);
-
-//    //8.Oktant
-//    Point2D p10(10,-10);
-//    bresenhamLine(p1,p10);
-//    setPoint(p10,blue);
-//    setPoint(p1, red);
-
-//      bresenhamCircle(Point2D(7,7),7,blue);
-
-//    bresenhamLine(Point2D(-16,-6),Point2D(0,-6));
-//    bresenhamLine(Point2D(-16,-6),Point2D(-8,2));
-//    bresenhamLine(Point2D(0,-6),Point2D(-8,2));
-
-//    bresenhamLine(Point2D(16,-6),Point2D(0,-6));
-//    bresenhamLine(Point2D(16,-6),Point2D(8,2));
-//    bresenhamLine(Point2D(0,-6),Point2D(8,2));
-
-//    bresenhamLine(Point2D(-8,3),Point2D(8,3));
-//    bresenhamLine(Point2D(-8,3),Point2D(0,11));
-//    bresenhamLine(Point2D(8,3),Point2D(0,11));
-
-//    bresenhamCircle(Point2D(0,0),20);
-
-//    Vec3d v1(1.54,4.123,1);
-//    Vec3d v2(100.94,150.15,1);
-
-//    bresenhamLine(v1, v2);
-
     //----- Clock
     bresenhamCircle(m_clock.getCenter(), m_clock.getRadius());
 
@@ -480,41 +373,46 @@ void GLBox::paintGL()
 
 void GLBox::animate()
 {
-    // Gravity
-    m_clock.SpeedY = m_clock.SpeedY - m_Ygravity;
-    m_clock.SpeedX = m_clock.SpeedX - m_Xgravity;
+//    // Gravity
+//    m_clock.SpeedY = m_clock.SpeedY - m_Ygravity;
+//    m_clock.SpeedX = m_clock.SpeedX - m_Xgravity;
 
-    // Get Clocks (min x, min y), (max x, max y) of Axis aligned bounding box (AABB)
-    Point2D min(m_clock.getCenter().getX() - m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() - m_clock.getRadius() + m_clock.SpeedY);
-    Point2D max(m_clock.getCenter().getX() + m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() + m_clock.getRadius() + m_clock.SpeedY);
+//    // Get Clocks (min x, min y), (max x, max y) of Axis aligned bounding box (AABB)
+//    Point2D min(m_clock.getCenter().getX() - m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() - m_clock.getRadius() + m_clock.SpeedY);
+//    Point2D max(m_clock.getCenter().getX() + m_clock.getRadius() + m_clock.SpeedX, m_clock.getCenter().getY() + m_clock.getRadius() + m_clock.SpeedY);
 
-    if(!CheckInBoundX(min.x))
-        m_clock.SpeedX *= -1;
+//    if(!CheckInBoundX(min.x))
+//        m_clock.SpeedX *= -1;
 
-    if(!CheckInBoundX(max.x))
-        m_clock.SpeedX *= -1;
+//    if(!CheckInBoundX(max.x))
+//        m_clock.SpeedX *= -1;
 
-    if(!CheckInBoundY(min.y))
-        m_clock.SpeedY *= -1;
+//    if(!CheckInBoundY(min.y))
+//        m_clock.SpeedY *= -1;
 
-    if(!CheckInBoundY(max.y))
-        m_clock.SpeedY *= -1;
+//    if(!CheckInBoundY(max.y))
+//        m_clock.SpeedY *= -1;
 
-    // Prevent Clock from gaining to much Speed
-    if(m_clock.SpeedX > 20)
-        m_clock.SpeedX *= 0.5;
+//    // Prevent Clock from gaining to much Speed
+//    if(m_clock.SpeedX > 20)
+//        m_clock.SpeedX *= 0.5;
 
-    if(m_clock.SpeedY > 20)
-        m_clock.SpeedY *= 0.5;
+//    if(m_clock.SpeedY > 20)
+//        m_clock.SpeedY *= 0.5;
 
-    // Set new Clock Position based on her Speed
-    m_clock.setCenter(Vec3d(m_clock.getCenter().getX(), m_clock.getCenter().getY() + m_clock.SpeedY, 1));
-    m_clock.setCenter(Vec3d(m_clock.getCenter().getX()  + m_clock.SpeedX, m_clock.getCenter().getY(), 1));
+//    // Set new Clock Position based on her Speed
+//    m_clock.setCenter(Vec3d(m_clock.getCenter().getX(), m_clock.getCenter().getY() + m_clock.SpeedY, 1));
+//    m_clock.setCenter(Vec3d(m_clock.getCenter().getX()  + m_clock.SpeedX, m_clock.getCenter().getY(), 1));
 
-    // At each timeout, increase the elapsed time until it reaches 100. Then it is set to zero and the hands of the clock are moved.
-    m_elapsed = (m_elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100;
-    m_clock.update(m_elapsed);
+//    // At each timeout, increase the elapsed time until it reaches 100. Then it is set to zero and the hands of the clock are moved.
+//    m_elapsed = (m_elapsed + qobject_cast<QTimer*>(sender())->interval()) % 100;
+//    m_clock.update(m_elapsed);
     updateGL();
+}
+
+void GLBox::focusChanged(int focus){
+    m_focus = focus;
+    qDebug() << m_focus;
 }
 
 void GLBox::mousePressEvent( QMouseEvent *e )

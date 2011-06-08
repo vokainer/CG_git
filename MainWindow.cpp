@@ -22,8 +22,13 @@ MainWindow::MainWindow (QWidget *parent, const char *name)
     // it gets a stretch factor of 1, so it takes all the space it can get
     centralLayout->addWidget (glbox, 1);
 
+    //Slider
+    QSlider *slider = new QSlider(Qt::Horizontal, glbox);
+    connect(slider, SIGNAL(valueChanged(int)), glbox, SLOT(focusChanged(int)));
+
     // Layout that contains the slider widget.
     QHBoxLayout *sliderLayout = new QHBoxLayout();
+    sliderLayout->addWidget(slider);
     centralLayout->addLayout(sliderLayout);
 }
 
