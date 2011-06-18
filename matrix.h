@@ -289,7 +289,7 @@ public:
     static Matrix<double, 4> getRotation(Vec4d oldVector, double degree){
         Matrix<double, 4> rotation;
         Matrix<double, 4> solution;
-        double d = sqrt(oldVector(0)^2 + oldVector(1)^2);
+        double d = sqrt(pow(oldVector(0), 2) + pow(oldVector(1), 2));
 
         //Rz
         rotation(0,0) = oldVector(0);
@@ -312,7 +312,12 @@ public:
         rotation(3,2) = 0;
         rotation(3,3) = d;
 
-        solution = 1/d * rotation;
+        // solution = 1/d * rotation;
+        for(unsigned r = 0; r < rotation.getSize(); r++)
+            for(unsigned c = 0; c < rotation.getSize(); c++)
+                solution(r, c) = 1/d * rotation(r, c);
+
+
 
         //Ry
         rotation(0,0) = oldVector(2);
@@ -404,7 +409,11 @@ public:
         rotation(3,2) = 0;
         rotation(3,3) = d;
 
-        solution *= 1/d *rotation;
+        //solution *= 1/d *rotation;
+        for(unsigned r = 0; r < rotation.getSize(); r++)
+            for(unsigned c = 0; c < rotation.getSize(); c++)
+                solution(r, c) *= 1/d;
+        solution *= rotation;
 
         return solution;
     }
